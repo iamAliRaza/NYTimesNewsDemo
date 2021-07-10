@@ -2,7 +2,6 @@ package com.mvvm_arch.ui.main.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.mvvm_arch.data.model.NewsData
 import com.mvvm_arch.databinding.FragmentNewsDetailBinding
 import com.mvvm_arch.ui.base.BaseFragment
 
@@ -15,13 +14,14 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>() {
         super.onStart()
 
         arguments?.apply {
-            val data: NewsData? = getParcelable("data")
-            data?.apply {
-                binding.title.text = title
-                binding.abstractT.text = _abstract
-                binding.byLine.text = byline
-                binding.date.text = pDate
-                binding.source.text = source
+            NewsDetailFragmentArgs.fromBundle(this).data.apply outer@ {
+                binding.apply {
+                    title.text = this@outer.title
+                    abstractT.text = _abstract
+                    byLine.text = byline
+                    date.text = pDate
+                    source.text = this@outer.source
+                }
             }
         }
     }

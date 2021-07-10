@@ -1,7 +1,10 @@
 package com.mvvm_arch.ui.main.home
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,8 +24,9 @@ class NewsListFragment : BaseFragment<FragmentNewsListBinding>() {
     private val viewModel: NewsListFragmentViewModel by viewModels()
     private lateinit var adapter: NewsAdapter
 
-    override fun onStart() {
-        super.onStart()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         context?.let {
 
@@ -30,12 +34,13 @@ class NewsListFragment : BaseFragment<FragmentNewsListBinding>() {
                 viewModel.fetchNews()
             }
 
-
             binding.articleList.layoutManager = LinearLayoutManager(it)
+            binding.articleList.setHasFixedSize(true)
             adapter = NewsAdapter { data ->
                 findNavController().navigate(
-                    R.id.action_newsListFragment_to_newsDetailFragment,
-                    bundleOf("data" to data)
+                    NewsListFragmentDirections.actionNewsListFragmentToNewsDetailFragment(
+                        data
+                    )
                 )
             }
             binding.articleList.adapter = adapter
@@ -53,7 +58,6 @@ class NewsListFragment : BaseFragment<FragmentNewsListBinding>() {
 
         binding.swipeToRefresh.isRefreshing = true
         viewModel.fetchNews()
-
     }
 
 }

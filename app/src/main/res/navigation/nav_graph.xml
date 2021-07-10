@@ -12,7 +12,13 @@
         tools:layout="@layout/fragment_news_list">
         <action
             android:id="@+id/action_newsListFragment_to_newsDetailFragment"
-            app:destination="@id/newsDetailFragment" />
+            app:destination="@id/newsDetailFragment">
+
+            <argument
+                android:name="data"
+                app:argType="com.mvvm_arch.data.model.NewsData" />
+
+        </action>
 
     </fragment>
 
@@ -22,10 +28,10 @@
         android:label="fragment_news_detail"
         tools:layout="@layout/fragment_news_detail">
 
-
         <argument
             android:name="data"
             app:argType="com.mvvm_arch.data.model.NewsData" />
+
     </fragment>
 
 </navigation>
